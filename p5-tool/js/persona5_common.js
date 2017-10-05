@@ -2,8 +2,8 @@ function supports_templating() {
 	return 'content' in document.createElement('template');
 }
 
-function generate_persona_link(persona) {
-	return "<a href=\"personas.html?persona=" + persona + "\">" + persona + "<a>";
+function generate_persona_link(persona, persona_name_i18n) {
+	return "<a href=\"personas.html?persona=" + persona + "\">" + persona_name_i18n + "<a>";
 }
 
 function generate_multiple_persona_links(persona) {
@@ -15,11 +15,11 @@ function generate_multiple_persona_links(persona) {
     }
     if (persona.indexOf(", ") != -1) {
         var personas = persona.split(", ");
-        return generate_persona_link(personas[0]) + ", " + 
-               generate_persona_link(personas[1]);
+        return generate_persona_link(personas[0], $.i18n.prop(personas[0])) + ", " + 
+               generate_persona_link(personas[1], $.i18n.prop(personas[1]));
     }
 
-    return generate_persona_link(persona);
+    return generate_persona_link(persona, $.i18n.prop(persona));
 }
 
 function generate_skill_cost(skill) {
@@ -73,7 +73,7 @@ function parse_elemental_resistances(resistances, properties, start_index) {
 		var curr_resistance = resistances[_RESISTANCES_LIST[i]];
 		var curr_property = properties[i + start_index];
 					
-		curr_property.innerHTML = _RESISTANCES_DICTIONARY[curr_resistance];
+		curr_property.innerHTML = $.i18n.prop(_RESISTANCES_DICTIONARY[curr_resistance]);
 		curr_property.setAttribute("style", _RESISTANCES_COLORS[curr_resistance]);
 	}
 }

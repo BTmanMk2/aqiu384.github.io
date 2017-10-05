@@ -1,15 +1,21 @@
 <head>
-<meta charset="UTF-8"></meta> 
+<meta charset="UTF-8">
+</meta> 
 	<title>Persona 5 Compendium</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/floatthead/1.4.2/jquery.floatThead.min.js"></script>
+
+	<script src="js/jquery.i18n.properties-min.js"></script>
 	
 	<script src="js/persona5_common.js"></script>
 	<script src="js/full_compendium.js"></script>
 	<script src="js/special_recipes.js"></script>
 	
+	
 	<link rel="stylesheet" type="text/css" href="css/persona5-comp.css">
+
+	
 	
 	<template id="persona-table-row">
       <tr>
@@ -34,16 +40,46 @@
         <td>Light</td>
         <td>Cursed</td>
       </tr>
-    </template>
+	</template>
 	
 	<script type="text/javascript">
-    $.fn.dataTableExt.oSort['arcanas-pre'] = function(a) {
-        return _ARCANA_ORDER[a];
-    }
+		$(function loadProperties(){ 
+			jQuery.i18n.properties({// 加载资浏览器语言对应的资源文件
+				name:'strings', // 资源文件名称
+				path:'i18n/', // 资源文件路径
+				mode:'map', // 用 Map 的方式使用资源文件中的值
+				language:'zh',
+				callback: function() {// 加载成功后设置显示内容
+  					$('[trans=arcana]').html($.i18n.prop('arcana')); 
+  					$('[trans=name]').html($.i18n.prop('name')); 
+  					$('[trans=level]').html($.i18n.prop('level')); 
+					$('[trans=st]').html($.i18n.prop('st'));
+					$('[trans=ma]').html($.i18n.prop('ma')); 
+					$('[trans=en]').html($.i18n.prop('en')); 
+					$('[trans=ag]').html($.i18n.prop('ag')); 
+					$('[trans=lu]').html($.i18n.prop('lu'));
+					$('[trans=skills]').html($.i18n.prop('(skills)'));
+					$('[trans=stat]').html($.i18n.prop('stat'));
+					$('[trans=elem_resist]').html($.i18n.prop('elem_resist'));
 
+				} 
+			}); 
+		});
+	</script>
+	
+	
+	<script type="text/javascript">
+	/*
+	$.fn.dataTableExt.oSort['arcanas-pre'] = function(a) {
+        return _ARCANA_ORDER[a];
+	}
+	*/
+
+	/*
 	$.fn.dataTableExt.oSort['elemental-resistances-pre'] = function(a) {
 		return $.inArray(a, ["Dr", "Rp", "Nu", "Rs", "-", "Wk", "??"]);
 	}
+	*/
 	
 	$.fn.dataTableExt.oSort['elemental-affinities-pre'] = function(a) {
 		return a == "-" ? 0 : parseInt(a);
@@ -51,9 +87,10 @@
 	
 	$(document).ready(function() {
 		function parse_persona_info(persona_name, persona, properties) {
-			properties[0].innerHTML = persona.arcana;
+			properties[0].innerHTML = $.i18n.prop(persona.arcana);
+
 			properties[1].innerHTML = persona.lvl;
-			properties[2].innerHTML = generate_persona_link(persona_name);
+			properties[2].innerHTML = generate_persona_link(persona_name, $.i18n.prop(persona_name));
             properties[0].setAttribute("style", "color:white");
 
             if (persona_name in _SPECIAL_RECIPES) {
@@ -82,9 +119,10 @@
 			var persona_table_body = document.getElementById("persona-table-body");
 			var persona_template = document.getElementById('persona-table-row');
 			var persona_properties = persona_template.content.querySelectorAll("td");
-			
+
 			for (var persona in compendium) {
 				fill_persona_properties(persona, compendium[persona], persona_properties);
+
 				persona_table_body.appendChild(document.importNode(persona_template.content, true));
 			}
 		}
@@ -112,19 +150,19 @@
 		<table class="persona-stats" id="persona-compendium">
 		<thead>
 			<tr>
-				<th class="sorter-false" colspan="3">Persona <a href="skills.html">(Skills)</a></th>
-				<th class="sorter-false" colspan="5">Stats</th>
-				<th class="sorter-false" colspan="10">Elemental Resistances</th>
+				<th class="sorter-false" colspan="3">Persona <a href="skills.html" trans="skills"></a></th>
+				<th class="sorter-false" colspan="5" trans="stat"></th>
+				<th class="sorter-false" colspan="10" trans="elem_resist"></th>
 			</tr>
 			<tr>
-				<th>Arcana</th>
-				<th>Lvl</th>
-				<th>Name</th>
-                <th>St</th>
-                <th>Ma</th>
-                <th>En</th>
-                <th>Ag</th>
-                <th>Lu</th>
+				<th trans="arcana"></th>
+				<th trans="level"></th>
+				<th trans="name"></th>
+                <th trans="st"></th>
+                <th trans="ma"></th>
+                <th trans="en"></th>
+                <th trans="ag"></th>
+                <th trans="lu"></th>
 				<th><img src="img/icons/phys.png"></th>
 				<th><img src="img/icons/gun.png"></th>
 				<th><img src="img/icons/fire.png"></th>
@@ -139,6 +177,8 @@
 		</thead>
 		<tbody id="persona-table-body"></tbody>
 		</table>
-		<h6><a href="https://www.youtube.com/watch?v=8eYf3OHqq9s">https://www.youtube.com/watch?v=8eYf3OHqq9s</a><h6>
+		<h6><a href="https://www.youtube.com/watch?v=8eYf3OHqq9s">https://www.youtube.com/watch?v=8eYf3OHqq9s</a></h6>
 	</div>
+
+	
 </body>  
