@@ -43,12 +43,12 @@
 	
 	<script type="text/javascript">
 		$(function loadProperties(){ 
-			jQuery.i18n.properties({// 加载资浏览器语言对应的资源文件
-				name:'strings', // 资源文件名称
-				path:'i18n/', // 资源文件路径
-				mode:'map', // 用 Map 的方式使用资源文件中的值
+			jQuery.i18n.properties({
+				name:'strings',
+				path:'i18n/',
+				mode:'map',
 				language:'zh',
-				callback: function() {// 加载成功后设置显示内容
+				callback: function() {
 					$('[trans=arcana]').html($.i18n.prop('arcana'));
 				} 
 			}); 
@@ -67,10 +67,11 @@
 		}
 	}
 
+	/*
     $.fn.dataTableExt.oSort['arcanas-pre'] = function(a) {
         return _ARCANA_ORDER[a];
     }
-
+	*/
 
 	$.fn.dataTableExt.oSort['learned-skill-levels-pre'] = function(a) {
 		return a == "Innate" ? 0 : parseInt(a);
@@ -83,10 +84,10 @@
 		
 		function fill_fusion_recipe(recipe, recipe_template) {
 			var ingredients = recipe.split(" x ");
-			recipe_template[0].innerHTML = _FULL_COMPENDIUM[ingredients[0]].arcana;
+			recipe_template[0].innerHTML = $.i18n.prop(_FULL_COMPENDIUM[ingredients[0]].arcana);
 			recipe_template[1].innerHTML = _FULL_COMPENDIUM[ingredients[0]].lvl;
 			recipe_template[2].innerHTML = generate_persona_link(ingredients[0], $.i18n.prop(ingredients[0]))
-			recipe_template[3].innerHTML = _FULL_COMPENDIUM[ingredients[1]].arcana;
+			recipe_template[3].innerHTML = $.i18n.prop(_FULL_COMPENDIUM[ingredients[1]].arcana);
 			recipe_template[4].innerHTML = _FULL_COMPENDIUM[ingredients[1]].lvl;
 			recipe_template[5].innerHTML = generate_persona_link(ingredients[1], $.i18n.prop(ingredients[1]));
 		}
@@ -249,7 +250,7 @@
 		function fill_persona_skills(name, level, properties) {
 			var skill = _FULL_SKILLS[name];
 			properties[0].innerHTML = generate_element_icon(skill.element); 
-			properties[1].innerHTML = name;
+			properties[1].innerHTML = $.i18n.prop(name);
 			properties[2].innerHTML = generate_skill_cost(skill);
 			properties[3].innerHTML = skill.effect;
 			properties[4].innerHTML = (level == 0) ? "Innate" : level;
@@ -257,9 +258,9 @@
 		
 		function load_persona_profile(persona) {
 			var profile = _FULL_COMPENDIUM[persona];
-			$("#persona-profile-title").html("Level " + 
+			$("#persona-profile-title").html($.i18n.prop("level") + ' ' +
 				String(profile.lvl) + ' ' + 
-				profile.arcana + ' ' + persona); 
+				$.i18n.prop(profile.arcana) + ' ' + $.i18n.prop(persona)); 
 			
 			parse_stats(profile, $("#base-stats").find("td"), 0);
 			parse_elemental_resistances(profile, $("#elemental-resistances").find("td"), 0);
