@@ -1,7 +1,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Persona 5 Compendium</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/floatthead/1.4.2/jquery.floatThead.min.js"></script>
 
@@ -50,8 +50,27 @@
 				language:'zh',
 				callback: function() {
 					$('[trans=arcana]').html($.i18n.prop('arcana'));
+					$('[trans=st]').html($.i18n.prop('st'));
+					$('[trans=ma]').html($.i18n.prop('ma'));
+					$('[trans=en]').html($.i18n.prop('en'));
+					$('[trans=ag]').html($.i18n.prop('ag'));
+					$('[trans=lu]').html($.i18n.prop('lu'));
+					$('[trans=level]').html($.i18n.prop('level'));
+					$('[trans=ingredient]').html($.i18n.prop('ingredient'));
+					$('[trans=elem_resist]').html($.i18n.prop('elem_resist'));
+					$('[trans=skills]').html($.i18n.prop('skills'));
+					$('[trans=type]').html($.i18n.prop('type'));
+					$('[trans=name]').html($.i18n.prop('name'));
+					$('[trans=cost]').html($.i18n.prop('cost'));
+					$('[trans=fusion]').html($.i18n.prop('fus_recip'));
+					$('[trans=personas_brackets]').html($.i18n.prop("(personas)"));
+					$('[trans=skills_brackets]').html($.i18n.prop("(skills)"));
+					console.log($.i18n.prop("(skills)"));
+					
+
 				} 
 			}); 
+
 		});
 	</script>
 	
@@ -252,8 +271,8 @@
 			properties[0].innerHTML = generate_element_icon(skill.element); 
 			properties[1].innerHTML = $.i18n.prop(name);
 			properties[2].innerHTML = generate_skill_cost(skill);
-			properties[3].innerHTML = skill.effect;
-			properties[4].innerHTML = (level == 0) ? "Innate" : level;
+			properties[3].innerHTML = $.i18n.prop(skill.effect);
+			properties[4].innerHTML = (level == 0) ? $.i18n.prop("Innate") : level;
 		}
 		
 		function load_persona_profile(persona) {
@@ -322,11 +341,11 @@
 				<th id="persona-profile-title" colspan="5"></th>
 			</tr>
 			<tr>
-				<th width="10%">St</th>
-				<th width="10%">Ma</th>
-				<th width="10%">En</th>
-				<th width="10%">Ag</th>
-				<th width="10%">Lu</th>
+				<th width="10%" trans="st" >St</th>
+				<th width="10%" trans="ma" >Ma</th>
+				<th width="10%" trans="en" >En</th>
+				<th width="10%" trans="ag" >Ag</th>
+				<th width="10%" trans="lu" >Lu</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -342,7 +361,7 @@
 		<table id="elemental-resistances" class="persona-stats">
 		<thead>
 			<tr>
-				<th colspan="10">Elemental Resistances</th>
+				<th colspan="10" trans="elem_resist" >Elemental Resistances</th>
 			</tr>
 			<tr>
 				<th><img src="img/icons/phys.png"></th>
@@ -376,14 +395,14 @@
 		<table id="persona-skills" class="persona-stats">
 		<thead>
 			<tr>
-				<th colspan="5">Skills</th>
+				<th colspan="5" trans="skills" >Skills</th>
 			</tr>
 			<tr>
-				<th width="5%">Type</th>
-				<th width="5%">Name</th>
-				<th width="5%">Cost</th>
-				<th width="80%">Effect</th>
-				<th width="5%">Level</th>
+				<th width="5%" trans="type" >Type</th>
+				<th width="5%" trans="name" >Name</th>
+				<th width="8%" trans="cost" >Cost</th>
+				<th width="62%" trans="effect" >Effect</th>
+				<th width="10%" trans="level" >Level</th>
 			</tr>
 		</thead>
 		<tbody></tbody>
@@ -392,7 +411,11 @@
 		<table hidden id="special-recipes" class="persona-stats">
 		<thead>
 			<tr>
-				<th><a href="index.html">(Personas)</a> Special Condition <a href="skills.html">(Skills)</a></th>
+				<th>
+					<a href="index.html" trans="personas_brackets" >(Personas)</a> 
+					<nobr trans="spec_cond" >Special Condition</nobr>
+					<a href="skills.html" trans="skills_brackets">(Skills)</a>
+				</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -405,15 +428,18 @@
 		<table id="normal-recipes" hidden class="persona-stats">
 		<thead>
 			<tr>
-				<th colspan="6"><a href="index.html">(Personas)</a> Fusion Recipes <a href="skills.html">(Skills)</a></th>
+				<th colspan="6">
+					<a href="index.html" trans="personas_brackets">(Personas)</a>
+					<nobr trans="fusion">Fusion Recipes</nobr>
+					<a href="skills.html" trans="skills_brackets" >(Skills)</a></th>
 			</tr>
 			<tr>
-				<th>Arcana</th>
-				<th>Level</th>
-				<th>Ingredient</th>
-				<th>Arcana</th>
-				<th>Level</th>
-				<th>Ingredient</th>
+				<th trans="arcana" >Arcana</th>
+				<th trans="level" >Level</th>
+				<th trans="ingredient" >Ingredient</th>
+				<th trans="arcana" >Arcana</th>
+				<th trans="level" >Level</th>
+				<th trans="ingredient">Ingredient</th>
 			</tr>
 		</thead>
 		<tbody id="persona-table-body"></tbody>
