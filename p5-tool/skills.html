@@ -33,7 +33,14 @@
 				language:'zh',
 				callback: function() {
 					$('[trans=arcana]').html($.i18n.prop('arcana'));
-
+					$('[trans=skill]').html($.i18n.prop('skill name'));
+					$('[trans=type]').html($.i18n.prop('type'));
+					$('[trans=personas]').html($.i18n.prop('personas'));
+					$('[trans=cost]').html($.i18n.prop('cost'));
+					$('[trans=effect]').html($.i18n.prop('effect'));
+					$('[trans=skill_card_negotiation]').html($.i18n.prop('skill_card_negotiation'));
+					$('[trans=skill_card_fusion]').html($.i18n.prop('skill_card_fusion'));
+					
 				} 
 			}); 
 		});
@@ -49,7 +56,7 @@
 		function fill_persona_properties(skill, properties, skill_name) {
             properties[0].innerHTML = generate_element_icon(skill.element); 
 			
-            properties[1].innerHTML = skill_name;
+            properties[1].innerHTML = $.i18n.prop(skill_name);
 
             if ('unique' in skill) {
                 properties[1].setAttribute("style", "color:red");
@@ -115,13 +122,13 @@
 		<table class="persona-stats" id="tablesorter-demo">
 		<thead>
 			<tr>
-				<th>Type</th>
-				<th>Skill <a href="index.html">(Personas)</a></th>
-				<th>Cost</th>
-				<th>Effect</th>
-                <th>Personas</th>
-                <th>Skill Card Negotiation</th>
-                <th>Skill Card Fusion</th>
+				<th trans="type">Type</th>
+				<th trans="skill">Skill <a href="index.html">(Personas)</a></th>
+				<th trans="cost">Cost</th>
+				<th trans="effect">Effect</th>
+                <th trans="personas">Personas</th>
+                <th trans="skill_card_negotiation">Skill Card Negotiation</th>
+                <th trans="skill_card_fusion">Skill Card Fusion</th>
 			</tr>
 		</thead>
 		<tbody id="persona-table-body"></tbody>
